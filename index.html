@@ -22,7 +22,12 @@
         errorText  : '错误',
         successText: '已复制'
       },
-      search: ['/'],
+      search: {
+        maxAge: 60000,
+        paths: ['/'],
+        placeholder: '输入并搜索',
+        noData: '找不到结果'
+      },
       plugins: [
         EditOnGithubPlugin.create('https://github.com/canovie/notes/blob/master/')
       ],
