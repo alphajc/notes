@@ -44,6 +44,8 @@ kustomize 中的`patchesJson6902`，最简单直接代码量最少的给 kuberne
 
 - `target`包含`group`、`kind`、`name`、`namespace` 和`version`字段，并与需要打补丁的 kubernetes 资源一一对应
 
+    > __注：__`group/version`对应 kubernetes 资源中的`apiVersion`
+
 __示例__
 
 ```yaml
