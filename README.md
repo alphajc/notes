@@ -211,6 +211,7 @@ __pyenv 在国内的使用__
 
 - [TCP 拥塞控制](https://zhuanlan.zhihu.com/p/37379780)
 - [SDN 网络指南](https://www.bookstack.cn/read/sdn-handbook/SUMMARY.md)
+- [HTTP2 简介](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
 
 ### ** DevOps **
 
