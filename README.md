@@ -243,6 +243,7 @@ __pyenv 在国内的使用__
 
 - [USB转串口Mac驱动](http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&pcid=41)：Mac 连接服务器串口
 - [Shell高级编程学习笔记(基础篇) - 90Zeng - 博客园](https://www.cnblogs.com/90zeng/p/shellNotes.html)
+- [Linux工具快速教程](https://linuxtools-rst.readthedocs.io/zh_CN/latest/index.html)
 
 __LDAP__
 
