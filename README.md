@@ -97,7 +97,7 @@ patchesJson6902:
     kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
     ```
 
-# 安全
+# 运维
 
 ## 证书
 
@@ -138,6 +138,15 @@ patchesJson6902:
     openssl req -new -key private/ca.key -out private/ca.csr -subj \
 "/C=CN/ST=myprovince/L=mycity/O=myorganization/OU=mygroup/CN=myname"
     ```
+## 其它
+
+### `glob`模式
+
+- 星号（`*`）匹配零个或多个任意字符
+- [``abc``] 匹配任何一个列在方括号中的字符 （这个例子要么匹配一个 ``a``，要么匹配一个 ``b``，要么匹配一个 ``c``）；
+- 问号（``?``）只匹配一个任意字符；
+- 如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 ``[0-9]`` 表示匹配所有 ``0`` 到 ``9`` 的数字）
+- 使用两个星号（``**``）表示匹配任意中间目录，比如 ``a/**/z`` 可以匹配 ``a/z`` 、 ``a/b/z`` 或 ``a/b/c/z`` 等
 
 ---
 
