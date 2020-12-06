@@ -2,226 +2,7 @@
 
 ---
 
-# 云原生
-
-## Kubernetes
-
-### 观测
-
-#### 资源使用情况
-
-- 查看 Pod 资源分配情况
-
-    ```bash
-    kubectl get pod -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.resources}{", "}{end}{end}' --all-namespaces
-    ```
-
-- 查看 Pod 资源使用情况
-
-    ```bash
-    kubectl top po --all-namespaces | sed '1d' | awk '{print "\nnamespace:"$1"\npod:"$2"\ncpu:"$3"\nmemory:"$4;system("kubectl -n "$1" get po "$2" -o=jsonpath=\"{range .spec.containers[*]}{.resources.requests}{end}\""); print ""}' > resources_usage.txt
-    ```
-
-### 部署
-
-#### 使用 Kustomize 
-
-__patchesJson6902__
-
-kustomize 中的`patchesJson6902`，最简单直接代码量最少的给 kubernetes 资源打补丁的方式
-
-该字段是一个列表，每项含`target`和`path`两个字段
-
-- `path`指向一个 patch 文件，示例文件如下：
-
-    ```yaml
-     - op: add
-       path: /some/new/path
-       value: value
-     - op: replace
-       path: /some/existing/path
-       value: new value
-    ```
-
-- `target`包含`group`、`kind`、`name`、`namespace` 和`version`字段，并与需要打补丁的 Kubernetes 资源一一对应
-
-    > __注：__`group/version`对应 kubernetes 资源中的`apiVersion`
-
-__示例__
-
-```yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-patchesJson6902:
-- target:
-    version: v1
-    kind: Deployment
-    name: my-deployment
-  path: add_init_container.yaml
-- target:
-    version: v1
-    kind: Service
-    name: my-service
-  path: add_service_annotation.yaml
-```
-
-### 管理
-
-#### 权限
-
-- 按 serviceaccount 的方式给镜像拉取权限
-
-    ```bash
-    kubectl create secret docker-registry <name> --docker-server=DOCKER_REGISTRY_SERVER --docker-username=DOCKER_USER --docker-password=DOCKER_PASSWORD --docker-email=DOCKER_EMAIL # 创建 imagePullSecret
-    kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "docker-registry"}]}' # 为 SA 添加镜像拉取权限
-    ```
-
----
-
-
-
-## Argo
-
-### Argocd
-
-- 重置 argocd 密码
-
-    ```bash
-    kubectl -n argocd patch secret argocd-secret  -p '{"data": {"admin.password": null, "admin.passwordMtime": null}}' # 清除密码
-    kubectl -n argocd delete pod -l app.kubernetes.io/name=argocd-server # 重建 pod
-    ```
-
-    重置后的密码为新的 pod 的名字
-
-    ```bash
-    kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
-    ```
-
-# 运维
-
-## 证书
-
-### Openssl 操作证书
-
-- 签发证书
-
-    ```bash
-    openssl genrsa -out private/demo.key 2048 # 生成私钥
-    openssl req -new -key private/demo.key -subj "/CN=demo" -out private/demo.csr # 生成证书请求
-    openssl x509 -req -in private/demo.csr -CA ca.crt -CAkey private/ca.key -CAcreateserial -out demo.crt -days 1000 -extensions v3_req # 使用根证书颁发证书
-    ```
-
-- 签发带扩展的证书示例
-
-    - 扩展文本内容(`demo.ext`)
-    
-        ```
-        subjectAltName = DNS:k8s1.demo.com,DNS:k8s.demo.com,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc, DNS:kubernetes.default.svc.cluster.local, IP:10.96.0.1, IP:172.21.0.8, IP:123.206.95.30
-        ```
-
-    - 签发：
-
-        ```bash
-        openssl x509 -req -in private/demo.csr -CA ca.crt -CAkey private/ca.key -CAcreateserial -out demo.crt -days 1000 -extfile demo.ext
-        ```
-
-- 查看证书内容
-
-    ```bash
-    openssl x509 -in demo.crt -noout -text
-    ```
-
-- 自签证书根证书
-
-    ```bash
-    openssl genrsa -aes256 -out private/ca.key 1024
-    openssl req -new -key private/ca.key -out private/ca.csr -subj \
-"/C=CN/ST=myprovince/L=mycity/O=myorganization/OU=mygroup/CN=myname"
-    ```
-## 其它
-
-### `glob`模式
-
-- 星号（`*`）匹配零个或多个任意字符
-- [``abc``] 匹配任何一个列在方括号中的字符 （这个例子要么匹配一个 ``a``，要么匹配一个 ``b``，要么匹配一个 ``c``）；
-- 问号（``?``）只匹配一个任意字符；
-- 如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 ``[0-9]`` 表示匹配所有 ``0`` 到 ``9`` 的数字）
-- 使用两个星号（``**``）表示匹配任意中间目录，比如 ``a/**/z`` 可以匹配 ``a/z`` 、 ``a/b/z`` 或 ``a/b/c/z`` 等
-
----
-
-# 数据库
-
-## Redis
-
-- 查看每客户端连接数
-
-    ```bash
-    redis-cli client list | awk -F '[=:]' '{sum[$2] += 1} END {for(i in sum) print i, sum[i];}' | sort -n -r -k 2
-    ```
-
-## Mysql
-
-- 刷 binlog 日志，并新启 binlog 文件
-
-    ```sql
-    FLUSH LOGS
-    ```
-
----
-
-# 中间件
-
-## Zookeeper
-
-- 生成ACL
-
-    ```bash
-    echo -n <user>:<password> | openssl dgst -binary -sha1 | openssl base64
-    ```
-
----
-
-# 编程语言
-
-## Python
-
-### 开发环境
-
-__pyenv 在国内的使用__
-
-以安装 __python 3.6.12__ 为例，`pyenv install`默认使用 python 官方源安装 python，在不使用或者不方便使用梯子时，用起来特别难受，这里对使用已有包进行安装的方法进行记录：
-
-1. 按照[官方文档](https://github.com/pyenv/pyenv)提供的方式安装`pyenv`
-2. 从其它地方拷贝或者从国内镜像源下载 python 安装包到任意目录：
-
-    - [淘宝](https://npm.taobao.org/mirrors/python/)
-
-3. 安装:
-
-    ```bash
-    PYTHON_BUILD_BUILD_PATH=`pwd` pyenv install 3.6.12
-    ```
-
-4. 直接修改 mirror_url 安装：
-
-    ```bash
-    PYTHON_BUILD_MIRROR_URL=https://npm.taobao.org/mirrors pyenv install 3.6.12
-    ```
-
----
-
-# 常用命令
-
-- 为非默认端口的站点生成 known_hosts
-
-    ```bash
-    ssh-keyscan -p 9522 gitlab.xxx.com
-    ```
-
----
-
-# 书签
+# 站点书签
 
 <!-- tabs:start -->
 
@@ -234,6 +15,8 @@ __pyenv 在国内的使用__
 - [华为云在 K8S 大规模场景下的 Service 性能优化实践 - 知乎](https://zhuanlan.zhihu.com/p/37230013)：`ipvs`与`iptables`型的 Service 间的性能差异
 - [kubectl 使用指南](https://kubectl.docs.kubernetes.io/)
 - [CNCF x Alibaba 云原生技术公开课 - 云原生教程 - 阿里云大学](https://edu.aliyun.com/roadmap/cloudnative)
+- [kubectl 创建 Pod 背后到底发生了什么?](https://fuckcloudnative.io/posts/what-happens-when-k8s/)
+- [深度解析Istio telemetry V2](https://zhuanlan.zhihu.com/p/136112888)
 
 ### ** 计算机网络 **
 
@@ -253,6 +36,7 @@ __pyenv 在国内的使用__
 - [USB转串口Mac驱动](http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&pcid=41)：Mac 连接服务器串口
 - [Shell高级编程学习笔记(基础篇) - 90Zeng - 博客园](https://www.cnblogs.com/90zeng/p/shellNotes.html)
 - [Linux工具快速教程](https://linuxtools-rst.readthedocs.io/zh_CN/latest/index.html)
+- [AWK使用](https://book.saubcy.com/AwkInAction/)
 
 __LDAP__
 
@@ -315,3 +99,14 @@ __算法__
 - [CS-Notes](https://cyc2018.github.io/CS-Notes)
 
 <!-- tabs:end -->
+
+---
+
+# 常用命令
+
+- 为非默认端口的站点生成 known_hosts
+
+    ```bash
+    ssh-keyscan -p 9522 gitlab.xxx.com
+    ```
+

@@ -15,14 +15,16 @@
   </style>
 </head>
 <body>
-  <noscript>This page requires JavaScript to work, please enable it or just read it on <a href="https://github.com/canovie/notes">Here</a>.</noscript>
+  <noscript>This page requires JavaScript to work, please enable it or just read it on <a href="https://github.com/alphajc/notes">Here</a>.</noscript>
   <div id="app">Loading...</div>
 
   <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
   <script>
     window.$docsify = {
       name: 'Jerry 的笔记',
-      repo: 'canovie/notes',
+      repo: 'alphajc/notes',
+      loadSidebar: true,
+      subMaxLevel: 3,
       copyCode: {
         buttonText : '点击复制',
         errorText  : '错误',
@@ -35,7 +37,7 @@
         noData: '找不到结果'
       },
       plugins: [
-        EditOnGithubPlugin.create('https://github.com/canovie/notes/blob/master/')
+        EditOnGithubPlugin.create('https://github.com/alphajc/notes/blob/master/')
       ],
       markdown: {
         smarttypants: true
@@ -72,8 +74,8 @@
     clientID: '957950d6932735f893f7',
     clientSecret: '633b3b15b18092380cd65a5977c1e97337148d56',
     repo: 'notes',
-    owner: 'canovie',
-    admin: ['canovie'],
+    owner: 'alphajc',
+    admin: ['alphajc'],
     // facebook-like distraction free mode
     distractionFreeMode: true
   })
