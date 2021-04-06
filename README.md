@@ -37,6 +37,7 @@
 - [Shell高级编程学习笔记(基础篇) - 90Zeng - 博客园](https://www.cnblogs.com/90zeng/p/shellNotes.html)
 - [Linux工具快速教程](https://linuxtools-rst.readthedocs.io/zh_CN/latest/index.html)
 - [AWK使用](https://book.saubcy.com/AwkInAction/)
+- [Linux 系统之进程状态](https://cloud.tencent.com/developer/article/1568077)
 
 **LDAP**
 
