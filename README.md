@@ -38,12 +38,12 @@
 - [Linux工具快速教程](https://linuxtools-rst.readthedocs.io/zh_CN/latest/index.html)
 - [AWK使用](https://book.saubcy.com/AwkInAction/)
 
-__LDAP__
+**LDAP**
 
 - [Centralized authentication using OpenLDAP - Gentoo Wiki](https://wiki.gentoo.org/wiki/Centralized_authentication_using_OpenLDAP)
 - [LDAP authentication - ArchWiki](https://wiki.archlinux.org/index.php/LDAP_authentication)
 
-__邮件服务__
+**邮件服务**
 
 - [Linux系统下邮件服务器的搭建（Postfix+Dovecot） - Lomu](http://lomu.me/post/linux-email-server)
 - [How to secure Postfix using Let's Encrypt - UpCloud](https://upcloud.com/community/tutorials/secure-postfix-using-lets-encrypt/)：配置加密邮件服务
@@ -71,21 +71,21 @@ __邮件服务__
 - [Programiz: Learn to Code for Free](https://www.programiz.com/)：学写代码
 - [RESTful HTTP Request and Response Examples](https://docs.tibco.com/pub/tpm-rest/1.0.0/doc/html/GUID-BAA2DC07-D7DC-49BD-80A5-B4998B56B9BF.html)：RESTful 规范示例
 
-__Go__
+**Go**
 
 - [Go 语言设计与实现 | Go 语言设计与实现](https://draveness.me/golang/)
 - [template - GoDoc](https://pkg.go.dev/text/template)：Go template 模版使用
 
-__Python__
+**Python**
 
 - [Python学习路线（学+测） - 阿里云大学](https://edu.aliyun.com/roadmap/python)
 - [Python Cookbook 3rd Edition Documentation — python3-cookbook 3.0.0 文档](https://python3-cookbook.readthedocs.io/zh_CN/latest/index.html)
 
-__Javascript__
+**Javascript**
 
 - [认识 V8 引擎 - 知乎](https://zhuanlan.zhihu.com/p/27628685)
 
-__算法__
+**算法**
 
 - [十大经典排序算法（动图演示） - 一像素 - 博客园](https://www.cnblogs.com/onepixel/p/7674659.html)
 - [30张图带你彻底理解红黑树 - 简书](https://www.jianshu.com/p/e136ec79235c)
@@ -99,14 +99,3 @@ __算法__
 - [CS-Notes](https://cyc2018.github.io/CS-Notes)
 
 <!-- tabs:end -->
-
----
-
-# 常用命令
-
-- 为非默认端口的站点生成 known_hosts
-
-    ```bash
-    ssh-keyscan -p 9522 gitlab.xxx.com
-    ```
-
