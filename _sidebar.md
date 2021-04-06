@@ -2,14 +2,16 @@
 
   - [Kubernetes](cloud-native/kubernetes.md)
   - [Argo](cloud-native/argo.md)
+  - [日志采集](cloud-native/log-collection.md)
+  - [Istio](cloud-native/istio.md)
 
 - 数据库
 
   - [MySQL](database/mysql.md)
-  - [Redis](database/redis.md)
 
 - 中间件
 
+  - [Redis](middleware/redis.md)
   - [Zookeeper](middleware/zookeeper.md)
 
 - 编程
