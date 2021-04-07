@@ -42,3 +42,7 @@
 
 * cpu工具：top、mpstat（查看处理器cpu利用率）、pidstat（查看进程cpu利用率）
 * io工具：iotop
+
+#### 参考链接
+
+浅谈 Linux 高负载的系统化分析：https://developer.aliyun.com/article/285606

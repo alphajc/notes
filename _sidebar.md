@@ -17,6 +17,7 @@
 - 编程
 
   - [Python](programming/python.md)
+  - [Javascript](programming/javascript.md)
 
 - 运维
 
