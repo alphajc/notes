@@ -2,7 +2,7 @@
 
 ## Promise
 
-### Promise.all 中如果有执行出错会怎样？
+### Promise.all 中如果有执行出错会怎样？ <!-- {docsify-ignore} -->
 
     > Promise.all([1,2,3,4,5].map(async(i)=>{ if(i==3){throw new Error('xxxx')}else{console.log(i);return i}})).then(res=>console.log(res)).catch(err=>console.log(err))
     1

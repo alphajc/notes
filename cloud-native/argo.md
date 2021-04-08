@@ -2,7 +2,7 @@
 
 ## Argocd
 
-### 重置 argocd 密码
+### 重置 argocd 密码 <!-- {docsify-ignore} -->
 
 ```bash
 kubectl -n argocd patch secret argocd-secret  -p '{"data": {"admin.password": null, "admin.passwordMtime": null}}' # 清除密码

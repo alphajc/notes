@@ -4,7 +4,7 @@
 
 部署参考[官方文档](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-kubernetes.html)
 
-### 创建 pipeline
+### 创建 pipeline <!-- {docsify-ignore} -->
 
 对应的 ES 需要有 Ingest node 进行 pipeline 处理
 
@@ -40,7 +40,7 @@ PUT /_ingest/pipeline/istio-ingressgateway-pipeline
 }
 ```
 
-### 创建 filebeat
+### 创建 filebeat <!-- {docsify-ignore} -->
 
 有部分配置进行过修改，注意命名空间，以及 **elasticsearch** 的访问方式，创建文件`filebeat-kubernetes.yaml`，以下为全部内容：
 

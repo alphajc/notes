@@ -4,7 +4,7 @@
 
 从[官方问题库](https://istio.io/latest/zh/docs/ops/common-problems/)着手解决所遇到的问题
 
-### 503 问题排查
+### 503 问题
 
 在 sidecar 的访问日志中，出现 response-flag 为 `UC` 的日志，伴随着连接被上游断开报错信息的出现
 

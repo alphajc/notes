@@ -2,7 +2,7 @@
 
 ## binlog 日志
 
-### 刷 binlog
+### 刷 binlog <!-- {docsify-ignore} -->
 
 ```sql
 FLUSH LOGS

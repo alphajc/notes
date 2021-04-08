@@ -7,6 +7,7 @@
 
 - 数据库
 
+  - [数据库原理](database/principle.md)
   - [MySQL](database/mysql.md)
 
 - 中间件

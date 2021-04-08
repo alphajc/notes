@@ -2,7 +2,7 @@
 
 ## 开发环境
 
-### pyenv 在国内的使用
+### pyenv 在国内的使用 <!-- {docsify-ignore} -->
 
 以安装 **python 3.6.12** 为例，`pyenv install`默认使用 python 官方源安装 python，在不使用或者不方便使用梯子时，用起来特别难受，这里对使用已有包进行安装的方法进行记录：
 

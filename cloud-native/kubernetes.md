@@ -2,15 +2,15 @@
 
 ## 观测
 
-### 资源使用情况
+### 资源使用
 
-#### 查看 Pod 资源分配情况
+#### 查看 Pod 资源分配
 
 ```bash
 kubectl get pod -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.resources}{", "}{end}{end}' --all-namespaces
 ```
 
-#### 查看 Pod 资源使用情况
+#### 查看 Pod 资源使用
 
 ```bash
 kubectl top po --all-namespaces | sed '1d' | awk '{print "\nnamespace:"$1"\npod:"$2"\ncpu:"$3"\nmemory:"$4;system("kubectl -n "$1" get po "$2" -o=jsonpath=\"{range .spec.containers[*]}{.resources.requests}{end}\""); print ""}' > resources_usage.txt
